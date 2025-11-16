@@ -489,43 +489,69 @@ export default function Portfolio() {
               <div className="mt-6 space-y-3 text-sm text-gray-600 dark:text-gray-400">
                 <div className="flex items-center gap-3">
                   <Mail size={16} />
-                  <span href="ermizamr197@gmail.com">ermizamr197@gmail.com</span>
+                  <span>ermizamr197@gmail.com</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <Github size={16} />
-                  <a href="github.com/ermizamr" className="underline hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                  <a href="https://github.com/ermizamr" className="underline hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                     github.com/ermizamr
                   </a>
                 </div>
               </div>
 
               <div className="mt-6 flex gap-3">
-                <a href="github.com/ermizamr" className="inline-flex items-center gap-2 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                <a href="https://github.com/ermizamr" className="inline-flex items-center gap-2 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
                   <Github size={14} /> GitHub
                 </a>
-                <a href="https://www.linkedin.com/in/ermyas-misiker-763aaa327/" className="inline-flex items-center gap-2 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                <a href="#" className="inline-flex items-center gap-2 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
                   <Linkedin size={14} /> LinkedIn
                 </a>
               </div>
             </div>
 
-            <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+            {/* Formspree Form - Replace YOUR_FORM_ID_HERE with your actual Formspree ID */}
+            <form 
+              action="https://formspree.io/f/YOUR_FORM_ID_HERE" 
+              method="POST"
+              className="space-y-4"
+            >
               <div>
-                <label className="block text-sm mb-2">Your name</label>
-                <input className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-transparent focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Mr Abebe/ch" />
+                <label htmlFor="name" className="block text-sm mb-2">Your name</label>
+                <input 
+                  type="text"
+                  id="name"
+                  name="name" 
+                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-transparent focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" 
+                  placeholder="Jane Doe" 
+                  required 
+                />
               </div>
               
               <div>
-                <label className="block text-sm mb-2">Email</label>
-                <input className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-transparent focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Abebu@company.com" />
+                <label htmlFor="email" className="block text-sm mb-2">Email</label>
+                <input 
+                  type="email"
+                  id="email"
+                  name="email" 
+                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-transparent focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" 
+                  placeholder="jane@company.com" 
+                  required 
+                />
               </div>
               
               <div>
-                <label className="block text-sm mb-2">Message</label>
-                <textarea className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-transparent focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" rows={4} placeholder="Let's discuss technology and systems..." />
+                <label htmlFor="message" className="block text-sm mb-2">Message</label>
+                <textarea 
+                  id="message"
+                  name="message" 
+                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-transparent focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" 
+                  rows={4} 
+                  placeholder="Let's discuss technology and systems..." 
+                  required 
+                />
               </div>
 
-              <button className="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors flex items-center justify-center gap-2">
+              <button type="submit" className="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors flex items-center justify-center gap-2">
                 <Mail size={16} />
                 Send Message
               </button>
