@@ -50,7 +50,7 @@ export default function Portfolio() {
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-cyan-400 flex items-center justify-center text-white font-bold shadow-lg">EZ</div>
             <div>
-              <h1 className="text-lg font-semibold">Ermo Zama</h1>
+              <h1 className="text-lg font-semibold">Ermi Zamr</h1>
               <p className="text-xs text-gray-500">Engineer • Dev • Learner</p>
             </div>
           </div>
