@@ -489,11 +489,11 @@ export default function Portfolio() {
               <div className="mt-6 space-y-3 text-sm text-gray-600 dark:text-gray-400">
                 <div className="flex items-center gap-3">
                   <Mail size={16} />
-                  <span>ermizamr197@gmail.com</span>
+                  <span href="ermizamr197@gmail.com">ermizamr197@gmail.com</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <Github size={16} />
-                  <a href="#" className="underline hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                  <a href="github.com/ermizamr" className="underline hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                     github.com/ermizamr
                   </a>
                 </div>
