@@ -489,7 +489,7 @@ export default function Portfolio() {
               <div className="mt-6 space-y-3 text-sm text-gray-600 dark:text-gray-400">
                 <div className="flex items-center gap-3">
                   <Mail size={16} />
-                  <span>ermi@example.com</span>
+                  <span>ermizamr197@gmail.com</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <Github size={16} />
@@ -500,10 +500,10 @@ export default function Portfolio() {
               </div>
 
               <div className="mt-6 flex gap-3">
-                <a href="#" className="inline-flex items-center gap-2 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                <a href="github.com/ermizamr" className="inline-flex items-center gap-2 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
                   <Github size={14} /> GitHub
                 </a>
-                <a href="#" className="inline-flex items-center gap-2 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                <a href="https://www.linkedin.com/in/ermyas-misiker-763aaa327/" className="inline-flex items-center gap-2 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
                   <Linkedin size={14} /> LinkedIn
                 </a>
               </div>
@@ -512,12 +512,12 @@ export default function Portfolio() {
             <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
               <div>
                 <label className="block text-sm mb-2">Your name</label>
-                <input className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-transparent focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Jane Doe" />
+                <input className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-transparent focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Mr Abebe/ch" />
               </div>
               
               <div>
                 <label className="block text-sm mb-2">Email</label>
-                <input className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-transparent focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="jane@company.com" />
+                <input className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-transparent focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Abebu@company.com" />
               </div>
               
               <div>
