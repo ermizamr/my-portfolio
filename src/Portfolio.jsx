@@ -511,7 +511,7 @@ export default function Portfolio() {
 
             {/* Formspree Form - Replace YOUR_FORM_ID_HERE with your actual Formspree ID */}
             <form 
-              action="https://formspree.io/f/YOUR_FORM_ID_HERE" 
+              action="https://formspree.io/f/xzzyjvvv" 
               method="POST"
               className="space-y-4"
             >
