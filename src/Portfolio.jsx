@@ -139,7 +139,7 @@ export default function Portfolio() {
         <div className="absolute top-40 left-1/2 w-80 h-80 bg-cyan-300 dark:bg-cyan-900 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-xl opacity-20 animate-pulse" style={{ animationDelay: '4s' }}></div>
       </div>
 
-      <header className="max-w-5xl mx-auto p-6 md:p-12">
+      <header className="w-full max-w-7xl mx-auto p-6 md:p-12">
         <nav className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <motion.div 
@@ -172,7 +172,7 @@ export default function Portfolio() {
         </nav>
       </header>
 
-      <main className="max-w-5xl mx-auto px-6 md:px-12">
+      <header className="w-full max-w-7xl mx-auto p-6 md:p-12">
         {/* Hero Section */}
         <section className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center py-12 md:py-20">
           <motion.div
