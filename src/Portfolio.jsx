@@ -566,7 +566,7 @@ export default function Portfolio() {
           </div>
           <div className="mt-2">© {new Date().getFullYear()} Ermi Zamr — Focused on continuous learning and system thinking</div>
         </footer>
-      </main>
+      </header>
     </div>
   );
 }
