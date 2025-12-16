@@ -36,7 +36,7 @@ const projects = [
     title: "Portfolio Website",
     desc: "Clean, modern personal website built with component-based architecture and responsive design principles.",
     tags: ["JavaScript", "React", "TailwindCSS", "GitHub Pages"],
-    url: "#",
+    url: "space_news_bot.html",
     img: "https://images.unsplash.com/photo-1508921912186-1d1a45ebb3c1?auto=format&fit=crop&w=1200&q=60",
     featured: false,
   },
