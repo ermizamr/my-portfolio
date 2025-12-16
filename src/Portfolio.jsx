@@ -27,7 +27,7 @@ const projects = [
     title: "Space-Themed Telegram Bot",
     desc: "Personal learning project delivering space-related information, news, and satellite updates with scalable architecture.",
     tags: ["Python", "Telegram API", "SQLite", "API Integration"],
-    url: "/space_news_bot.html",
+    url: "src/space_news_bot.html",
     img: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=1200&q=60",
     featured: true,
   },
