@@ -4,9 +4,7 @@ import {
   Mail,
   Github,
   Linkedin,
-  Briefcase,
   Code,
-  Cpu,
   Layers,
   Moon,
   Sun,
@@ -15,8 +13,6 @@ import {
   Globe,
   Zap,
   Heart,
-  Database,
-  Bot,
   School,
   Target,
 } from "lucide-react";
@@ -27,7 +23,8 @@ const projects = [
     title: "Space-Themed Telegram Bot",
     desc: "Personal learning project delivering space-related information, news, and satellite updates with scalable architecture.",
     tags: ["Python", "Telegram API", "SQLite", "API Integration"],
-    url: "google.com",
+    // root-relative static file served from public/
+    url: "/space_news_bot.html",
     img: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=1200&q=60",
     featured: true,
   },
@@ -51,7 +48,7 @@ const projects = [
   },
 ];
 
-// Brain icon component
+// Brain icon component (inline SVG)
 function Brain(props) {
   return (
     <svg
@@ -76,10 +73,11 @@ export default function Portfolio() {
   // Initialize after component mounts
   useEffect(() => {
     setMounted(true);
-    
+
     // Check if dark mode is preferred or previously selected
-    const isDark = localStorage.getItem('darkMode') === 'true' || 
-                   window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const isDark =
+      localStorage.getItem("darkMode") === "true" ||
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
     setDarkMode(isDark);
   }, []);
 
@@ -87,41 +85,41 @@ export default function Portfolio() {
   useEffect(() => {
     if (mounted) {
       if (darkMode) {
-        document.documentElement.classList.add('dark');
-        localStorage.setItem('darkMode', 'true');
+        document.documentElement.classList.add("dark");
+        localStorage.setItem("darkMode", "true");
       } else {
-        document.documentElement.classList.remove('dark');
-        localStorage.setItem('darkMode', 'false');
+        document.documentElement.classList.remove("dark");
+        localStorage.setItem("darkMode", "false");
       }
     }
   }, [darkMode, mounted]);
 
-  // Smooth scroll for anchor links
+  // Smooth scroll for in-page anchors
   useEffect(() => {
     const handleAnchorClick = (e) => {
-      const href = e.currentTarget.getAttribute('href');
-      if (href && href.startsWith('#')) {
+      const href = e.currentTarget.getAttribute("href");
+      if (href && href.startsWith("#")) {
         e.preventDefault();
         const element = document.querySelector(href);
         if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
+          element.scrollIntoView({ behavior: "smooth" });
         }
       }
     };
 
     const anchorLinks = document.querySelectorAll('a[href^="#"]');
-    anchorLinks.forEach(link => {
-      link.addEventListener('click', handleAnchorClick);
+    anchorLinks.forEach((link) => {
+      link.addEventListener("click", handleAnchorClick);
     });
 
     return () => {
-      anchorLinks.forEach(link => {
-        link.removeEventListener('click', handleAnchorClick);
+      anchorLinks.forEach((link) => {
+        link.removeEventListener("click", handleAnchorClick);
       });
     };
   }, [mounted]);
 
-  // Prevent hydration mismatch
+  // Prevent hydration mismatch on SSR / client-only UI
   if (!mounted) {
     return (
       <div className="min-h-screen bg-white dark:bg-gray-900 flex items-center justify-center">
@@ -132,17 +130,17 @@ export default function Portfolio() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800 text-gray-900 dark:text-gray-100 antialiased transition-colors duration-300">
-      {/* Animated background elements */}
+      {/* Animated background */}
       <div className="fixed inset-0 -z-10 overflow-hidden">
         <div className="absolute -top-40 -right-32 w-80 h-80 bg-purple-300 dark:bg-purple-900 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-xl opacity-20 animate-pulse"></div>
-        <div className="absolute -bottom-40 -left-32 w-80 h-80 bg-blue-300 dark:bg-blue-900 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-xl opacity-20 animate-pulse" style={{ animationDelay: '2s' }}></div>
-        <div className="absolute top-40 left-1/2 w-80 h-80 bg-cyan-300 dark:bg-cyan-900 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-xl opacity-20 animate-pulse" style={{ animationDelay: '4s' }}></div>
+        <div className="absolute -bottom-40 -left-32 w-80 h-80 bg-blue-300 dark:bg-blue-900 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-xl opacity-20 animate-pulse" style={{ animationDelay: "2s" }}></div>
+        <div className="absolute top-40 left-1/2 w-80 h-80 bg-cyan-300 dark:bg-cyan-900 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-xl opacity-20 animate-pulse" style={{ animationDelay: "4s" }}></div>
       </div>
 
       <header className="w-full max-w-7xl mx-auto p-6 md:p-12">
         <nav className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <motion.div 
+            <motion.div
               whileHover={{ scale: 1.05, rotate: 5 }}
               className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center text-white font-bold shadow-lg"
             >
@@ -159,7 +157,7 @@ export default function Portfolio() {
             <a href="#about" className="text-sm px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">About</a>
             <a href="#vision" className="text-sm px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">Vision</a>
             <a href="#contact" className="text-sm px-4 py-2 rounded-md bg-blue-600 text-white shadow hover:brightness-110 transition-all">Contact</a>
-            
+
             {/* Dark Mode Toggle */}
             <button
               onClick={() => setDarkMode(!darkMode)}
@@ -173,13 +171,9 @@ export default function Portfolio() {
       </header>
 
       <header className="w-full max-w-7xl mx-auto p-6 md:p-12">
-        {/* Hero Section */}
+        {/* Hero */}
         <section className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center py-12 md:py-20">
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-          >
+          <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }}>
             <p className="text-sm text-blue-600 dark:text-blue-400 font-medium mb-3 flex items-center gap-2">
               <Sparkles size={14} /> Self-Taught Developer
             </p>
@@ -190,8 +184,7 @@ export default function Portfolio() {
               </span>
             </h2>
             <p className="mt-4 text-gray-600 dark:text-gray-400">
-              Technology enthusiast focused on software development, computational thinking, and modern engineering principles. 
-              I approach problems by breaking ideas into components, analyzing constraints, and designing practical solutions.
+              Technology enthusiast focused on software development, computational thinking, and modern engineering principles. I approach problems by breaking ideas into components, analyzing constraints, and designing practical solutions.
             </p>
 
             <div className="mt-6 flex gap-3 flex-wrap">
@@ -223,24 +216,11 @@ export default function Portfolio() {
             </div>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.98 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6 }}
-            className="relative"
-          >
+          <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6 }} className="relative">
             <div className="rounded-2xl overflow-hidden shadow-2xl border border-gray-200 dark:border-gray-700">
-              <img 
-                src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=60" 
-                alt="Ermi Zamr - Technology Enthusiast" 
-                className="object-cover w-full h-64 md:h-80" 
-              />
+              <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=60" alt="Ermi Zamr - Technology Enthusiast" className="object-cover w-full h-64 md:h-80" />
             </div>
-            <motion.div 
-              animate={{ y: [0, -10, 0] }}
-              transition={{ duration: 4, repeat: Infinity }}
-              className="absolute -top-4 -right-4 bg-white dark:bg-gray-800 p-3 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700"
-            >
+            <motion.div animate={{ y: [0, -10, 0] }} transition={{ duration: 4, repeat: Infinity }} className="absolute -top-4 -right-4 bg-white dark:bg-gray-800 p-3 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700">
               <Zap className="text-yellow-500" size={20} />
             </motion.div>
           </motion.div>
@@ -267,9 +247,11 @@ export default function Portfolio() {
                   <div key={item.skill} className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
                     <span>{item.skill}</span>
                     <span className={`text-xs px-2 py-1 rounded-full ${
-                      item.level === 'Intermediate' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' :
-                      item.level === 'Beginner' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' :
-                      'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200'
+                      item.level === "Intermediate"
+                        ? "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200"
+                        : item.level === "Beginner"
+                        ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
+                        : "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200"
                     }`}>
                       {item.level}
                     </span>
@@ -295,9 +277,11 @@ export default function Portfolio() {
                   <div key={item.skill} className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
                     <span>{item.skill}</span>
                     <span className={`text-xs px-2 py-1 rounded-full ${
-                      item.level === 'Intermediate' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' :
-                      item.level === 'Advanced' ? 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200' :
-                      'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200'
+                      item.level === "Intermediate"
+                        ? "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200"
+                        : item.level === "Advanced"
+                        ? "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200"
+                        : "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200"
                     }`}>
                       {item.level}
                     </span>
@@ -318,64 +302,66 @@ export default function Portfolio() {
           </div>
 
           <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {projects.map((p, i) => (
-              <motion.div
-                key={p.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 }}
-                className={`group block rounded-2xl overflow-hidden shadow hover:shadow-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 ${
-                  p.featured ? 'ring-2 ring-blue-500' : ''
-                }`}
-                whileHover={{ y: -8 }}
-              >
-                {p.featured && (
-                  <div className="absolute top-4 left-4 bg-blue-500 text-white px-2 py-1 rounded-full text-xs font-medium z-10">
-                    Featured
+            {projects.map((p, i) => {
+              // Resolve href so it works with PUBLIC_URL or direct root-relative path
+              const href =
+                p.url && p.url.startsWith("/")
+                  ? `${process.env.PUBLIC_URL || ""}${p.url}`
+                  : p.url;
+
+              const isAnchor = href && href.startsWith("#");
+              const target = isAnchor ? undefined : "_blank";
+
+              return (
+                <motion.a
+                  key={p.id}
+                  href={href}
+                  target={target}
+                  rel={target ? "noopener noreferrer" : undefined}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                  className={`group block rounded-2xl overflow-hidden shadow hover:shadow-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 ${
+                    p.featured ? "ring-2 ring-blue-500" : ""
+                  }`}
+                  whileHover={{ y: -8 }}
+                >
+                  {p.featured && (
+                    <div className="absolute top-4 left-4 bg-blue-500 text-white px-2 py-1 rounded-full text-xs font-medium z-10">
+                      Featured
+                    </div>
+                  )}
+                  <div className="h-40 md:h-36 overflow-hidden relative">
+                    <img src={p.img} alt={p.title} className="w-full h-full object-cover transform group-hover:scale-110 transition duration-500" />
+                    <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300"></div>
                   </div>
-                )}
-                <div className="h-40 md:h-36 overflow-hidden relative">
-                  <img 
-                    src={p.img} 
-                    alt={p.title} 
-                    className="w-full h-full object-cover transform group-hover:scale-110 transition duration-500" 
-                  />
-                  <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300"></div>
-                </div>
-                <div className="p-4">
-                  <h4 className="font-semibold">{p.title}</h4>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">{p.desc}</p>
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    {p.tags.map((t) => (
-                      <span 
-                        key={t} 
-                        className="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded-full"
-                      >
-                        {t}
-                      </span>
-                    ))}
+                  <div className="p-4">
+                    <h4 className="font-semibold">{p.title}</h4>
+                    <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">{p.desc}</p>
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      {p.tags.map((t) => (
+                        <span key={t} className="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded-full">
+                          {t}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              </motion.div>
-            ))}
+                </motion.a>
+              );
+            })}
           </div>
         </section>
 
-        {/* About Me */}
+        {/* About */}
         <section id="about" className="py-8 md:py-14 grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="md:col-span-2 bg-white dark:bg-gray-800 p-6 rounded-2xl shadow border border-gray-200 dark:border-gray-700">
             <h3 className="text-xl font-bold mb-4">Technical Approach & Mindset</h3>
             <p className="text-gray-600 dark:text-gray-400 mb-4">
-              I am a self-taught technology enthusiast with a growing focus on software development, 
-              computational thinking, and modern engineering principles. I enjoy approaching problems 
-              the way experienced engineers do—breaking ideas into components, analyzing constraints, 
-              and designing practical solutions.
+              I am a self-taught technology enthusiast with a growing focus on software development, computational thinking, and modern engineering principles. I enjoy approaching problems the way experienced engineers do—breaking ideas into components, analyzing constraints, and designing practical solutions.
             </p>
-            
+
             <p className="text-gray-600 dark:text-gray-400 mb-4">
-              Over the past year, I've actively built projects that strengthen my technical foundation, 
-              including Telegram bots, small web applications, and experiments involving databases, 
-              cloud platforms, and automation. I value clean systems, clear logic, and continuous learning.
+              Over the past year, I've actively built projects that strengthen my technical foundation, including Telegram bots, small web applications, and experiments involving databases, cloud platforms, and automation. I value clean systems, clear logic, and continuous learning.
             </p>
 
             <h4 className="font-semibold mt-6 mb-3">Learning Philosophy</h4>
@@ -402,7 +388,7 @@ export default function Portfolio() {
                 Personal Skills
               </h4>
               <div className="space-y-3 text-sm">
-                {['Strong analytical thinking', 'Fast self-learner', 'System thinking', 'Independent problem-solving', 'Growth mindset'].map((skill) => (
+                {["Strong analytical thinking", "Fast self-learner", "System thinking", "Independent problem-solving", "Growth mindset"].map((skill) => (
                   <div key={skill} className="flex items-center gap-2">
                     <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
                     <span className="text-gray-600 dark:text-gray-400">{skill}</span>
@@ -417,7 +403,7 @@ export default function Portfolio() {
                 Interests
               </h4>
               <div className="space-y-3 text-sm">
-                {['Quantum Computing', 'Computational Thinking', 'System Architecture', 'Scientific Computing', 'Algorithm Design'].map((interest) => (
+                {["Quantum Computing", "Computational Thinking", "System Architecture", "Scientific Computing", "Algorithm Design"].map((interest) => (
                   <div key={interest} className="flex items-center gap-2">
                     <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                     <span className="text-gray-600 dark:text-gray-400">{interest}</span>
@@ -428,7 +414,7 @@ export default function Portfolio() {
           </div>
         </section>
 
-        {/* Vision & Goals */}
+        {/* Vision */}
         <section id="vision" className="py-8 md:py-14">
           <div className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow border border-gray-200 dark:border-gray-700">
             <h3 className="text-2xl font-bold mb-6">Vision & Learning Path</h3>
@@ -439,8 +425,7 @@ export default function Portfolio() {
                   Long-term Goals
                 </h4>
                 <p className="text-gray-600 dark:text-gray-400 mb-4">
-                  My long-term goal is to become an engineer who can design, analyze, and build systems 
-                  at different levels—from software to scientific ideas.
+                  My long-term goal is to become an engineer who can design, analyze, and build systems at different levels—from software to scientific ideas.
                 </p>
                 <ul className="text-gray-600 dark:text-gray-400 space-y-2 text-sm">
                   {[
@@ -448,7 +433,7 @@ export default function Portfolio() {
                     "Advanced mathematical reasoning",
                     "Quantum science and computation",
                     "Engineering problem-solving",
-                    "Real-world system building"
+                    "Real-world system building",
                   ].map((goal, index) => (
                     <li key={index} className="flex items-start gap-2">
                       <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
@@ -457,7 +442,7 @@ export default function Portfolio() {
                   ))}
                 </ul>
               </div>
-              
+
               <div>
                 <h4 className="font-semibold mb-4 flex items-center gap-2 text-lg">
                   <School className="text-green-500" size={20} />
@@ -468,8 +453,7 @@ export default function Portfolio() {
                   <div className="text-sm text-gray-500 dark:text-gray-400">Mathematics, Natural Sciences, Technology</div>
                 </div>
                 <p className="text-gray-600 dark:text-gray-400 text-sm">
-                  Ongoing self-studies in software development, algorithms, quantum principles, 
-                  and problem-solving methods used by experienced engineers.
+                  Ongoing self-studies in software development, algorithms, quantum principles, and problem-solving methods used by experienced engineers.
                 </p>
               </div>
             </div>
@@ -482,8 +466,7 @@ export default function Portfolio() {
             <div>
               <h3 className="text-xl font-bold">Let's Discuss Technology</h3>
               <p className="mt-2 text-gray-600 dark:text-gray-400">
-                Interested in computational thinking, system design, or technology learning paths? 
-                I'm always open to discussing ideas and opportunities.
+                Interested in computational thinking, system design, or technology learning paths? I'm always open to discussing ideas and opportunities.
               </p>
 
               <div className="mt-6 space-y-3 text-sm text-gray-600 dark:text-gray-400">
@@ -509,46 +492,21 @@ export default function Portfolio() {
               </div>
             </div>
 
-            {/* Formspree Form - Replace YOUR_FORM_ID_HERE with your actual Formspree ID */}
-            <form 
-              action="https://formspree.io/f/xzzyjvvv" 
-              method="POST"
-              className="space-y-4"
-            >
+            {/* Contact form (Formspree) */}
+            <form action="https://formspree.io/f/xzzyjvvv" method="POST" className="space-y-4">
               <div>
                 <label htmlFor="name" className="block text-sm mb-2">Your name</label>
-                <input 
-                  type="text"
-                  id="name"
-                  name="name" 
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-transparent focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" 
-                  placeholder="Jane Doe" 
-                  required 
-                />
+                <input type="text" id="name" name="name" className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-transparent focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Jane Doe" required />
               </div>
-              
+
               <div>
                 <label htmlFor="email" className="block text-sm mb-2">Email</label>
-                <input 
-                  type="email"
-                  id="email"
-                  name="email" 
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-transparent focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" 
-                  placeholder="jane@company.com" 
-                  required 
-                />
+                <input type="email" id="email" name="email" className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-transparent focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="jane@company.com" required />
               </div>
-              
+
               <div>
                 <label htmlFor="message" className="block text-sm mb-2">Message</label>
-                <textarea 
-                  id="message"
-                  name="message" 
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-transparent focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" 
-                  rows={4} 
-                  placeholder="Let's discuss technology and systems..." 
-                  required 
-                />
+                <textarea id="message" name="message" className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-transparent focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" rows={4} placeholder="Let's discuss technology and systems..." required />
               </div>
 
               <button type="submit" className="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors flex items-center justify-center gap-2">
