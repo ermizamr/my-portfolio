@@ -287,7 +287,7 @@ export default function Portfolio() {
                 transition={{ duration: 0.6 }}
                 className="relative"
               >
-                <div className="rounded-2xl overflow-hidden shadow-2xl border border-gray-200 dark:border-gray-700">
+                <div>
                   <img 
                     src="https://i.ibb.co/NgyM9t13/5913428015746583538-121.jpg" alt="5913428015746583538-121" 
                     alt="Ermi Zamr - Technology Enthusiast" 
