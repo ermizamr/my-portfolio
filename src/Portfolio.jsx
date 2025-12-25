@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Mail,
   Github,
   Linkedin,
-  Briefcase,
   Code,
-  Cpu,
   Layers,
   Moon,
   Sun,
@@ -15,53 +13,71 @@ import {
   Globe,
   Zap,
   Heart,
-  Database,
   Bot,
   School,
   Target,
+  X,
+  ExternalLink,
 } from "lucide-react";
 
+/*
+  Redesigned Portfolio - "Glow Up"
+  - Hero with gradient name and animated accents
+  - Project cards with overlay, tags and action buttons
+  - Project modal preview (image + description)
+  - Floating socials rail
+  - Keeps existing Bot embed page and Space-for-ET project link
+*/
+
+/* -------- Projects data (add/edit as you like) -------- */
 const projects = [
   {
     id: 1,
     title: "Space-Themed Telegram Bot",
-    desc: "Personal learning project delivering space-related information, news, and satellite updates with scalable architecture.",
+    desc:
+      "Personal learning project delivering space-related information, news, and satellite updates with scalable architecture.",
     tags: ["Python", "Telegram API", "SQLite", "API Integration"],
-    // If you want the project card to link to the new embedded page, use this path.
-    url: "#bot-page", 
-    img: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=1200&q=60",
+    url: "#bot-page",
+    img:
+      "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=1600&q=60",
     featured: true,
   },
   {
     id: 2,
     title: "Portfolio Website",
-    desc: "Clean, modern personal website built with component-based architecture and responsive design principles.",
-    tags: ["JavaScript", "React", "TailwindCSS", "GitHub Pages"],
+    desc:
+      "This very portfolio — a clean, modern personal site with component-driven layout and responsive design.",
+    tags: ["React", "Tailwind", "Framer Motion"],
     url: "#",
-    img: "https://images.unsplash.com/photo-1508921912186-1d1a45ebb3c1?auto=format&fit=crop&w=1200&q=60",
+    img:
+      "https://images.unsplash.com/photo-1508921912186-1d1a45ebb3c1?auto=format&fit=crop&w=1600&q=60",
     featured: false,
   },
   {
     id: 3,
     title: "Bot Admin Tools & Templates",
-    desc: "Management scripts and configuration templates for efficient bot development and testing workflows.",
-    tags: ["Python", "Automation", "Cloud Deployment", "System Design"],
+    desc:
+      "Management scripts and configuration templates for efficient bot development, testing and deployment.",
+    tags: ["Python", "Automation", "DevOps"],
     url: "#",
-    img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1200&q=60",
+    img:
+      "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1600&q=60",
     featured: true,
   },
   {
     id: 4,
     title: "Space for ET",
-    desc: "A space-themed frontend project — live at space-for-et.vercel.app. Showcases UI and space content delivered on Vercel.",
-    tags: ["Next.js", "Vercel", "Frontend", "Space"],
+    desc:
+      "Space-themed frontend project deployed on Vercel. Live: space-for-et.vercel.app — UI experiments and space content.",
+    tags: ["Next.js", "Vercel", "Frontend"],
     url: "https://space-for-et.vercel.app",
-    img: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=1200&q=60",
+    img:
+      "https://images.unsplash.com/photo-1532298229144-0ec0c57515c7?auto=format&fit=crop&w=1600&q=60",
     featured: false,
   },
 ];
 
-// Brain icon component
+/* -------- Small helper components -------- */
 function Brain(props) {
   return (
     <svg
@@ -79,7 +95,7 @@ function Brain(props) {
   );
 }
 
-// NEW COMPONENT: Renders the embedded HTML page
+/* -------- Bot embedded page (keeps your iframe view) -------- */
 const BotPageView = ({ onBack }) => (
   <div id="bot-page" className="w-full max-w-7xl mx-auto p-6 md:p-12">
     <button
@@ -88,84 +104,183 @@ const BotPageView = ({ onBack }) => (
     >
       &larr; Back to Portfolio
     </button>
-    
-    <div className="rounded-2xl shadow-2xl overflow-hidden border-4 border-blue-500 dark:border-blue-700">
-      {/* This iframe loads the content of your separate HTML file.
-        The height (h-[90vh]) is set to take up most of the screen vertically.
-      */}
+
+    <div className="rounded-2xl shadow-2xl overflow-hidden border-4 border-indigo-500 dark:border-indigo-700">
       <iframe
-        src="/space_news_bot.html" 
+        src="/space_news_bot.html"
         title="Space News Bot Content"
-        className="w-full h-[90vh] bg-white dark:bg-gray-900" 
-        style={{ border: 'none' }}
+        className="w-full h-[90vh] bg-white dark:bg-gray-900"
+        style={{ border: "none" }}
       />
     </div>
   </div>
 );
 
+/* -------- Project Modal for quick preview -------- */
+function ProjectModal({ project, onClose }) {
+  if (!project) return null;
+  return (
+    <AnimatePresence>
+      <motion.div
+        key="overlay"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="fixed inset-0 z-50 flex items-center justify-center p-6"
+        aria-modal="true"
+        role="dialog"
+      >
+        <motion.div
+          initial={{ y: 30, scale: 0.98 }}
+          animate={{ y: 0, scale: 1 }}
+          exit={{ y: 20, opacity: 0 }}
+          transition={{ type: "spring", stiffness: 200, damping: 20 }}
+          className="max-w-3xl w-full bg-white dark:bg-gray-800 rounded-2xl shadow-2xl overflow-hidden border border-gray-200 dark:border-gray-700"
+        >
+          <div className="relative">
+            <img
+              src={project.img}
+              alt={project.title}
+              className="w-full h-64 object-cover"
+            />
+            <button
+              onClick={onClose}
+              className="absolute top-4 right-4 bg-white/70 dark:bg-gray-900/70 rounded-full p-2 hover:scale-105 transition"
+              aria-label="Close preview"
+            >
+              <X size={18} />
+            </button>
+          </div>
 
+          <div className="p-6">
+            <h3 className="text-2xl font-bold">{project.title}</h3>
+            <p className="mt-3 text-gray-600 dark:text-gray-300">{project.desc}</p>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {project.tags.map((t) => (
+                <span
+                  key={t}
+                  className="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded-full"
+                >
+                  {t}
+                </span>
+              ))}
+            </div>
+
+            <div className="mt-6 flex gap-3">
+              {project.url && project.url.startsWith("http") ? (
+                <a
+                  href={project.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg shadow hover:brightness-105 transition"
+                >
+                  <ExternalLink size={14} /> Visit Live
+                </a>
+              ) : project.url === "#bot-page" ? (
+                <button
+                  onClick={() => {
+                    // we'll close modal; parent can navigate to bot view
+                    onClose(true);
+                  }}
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-50 text-indigo-700 rounded-lg border border-indigo-100 hover:bg-indigo-100 transition"
+                >
+                  Open Bot Page
+                </button>
+              ) : null}
+
+              <a
+                href="mailto:ermizamr197@gmail.com?subject=Project%20Feedback"
+                className="inline-flex items-center gap-2 px-4 py-2 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition"
+              >
+                <Mail size={14} /> Contact
+              </a>
+            </div>
+          </div>
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
+  );
+}
+
+/* -------- Floating socials rail -------- */
+function FloatingSocials() {
+  return (
+    <div className="fixed right-6 bottom-12 z-40 hidden md:flex flex-col gap-3">
+      <a
+        href="mailto:ermizamr197@gmail.com"
+        className="w-12 h-12 bg-white dark:bg-gray-800 rounded-full flex items-center justify-center shadow hover:scale-105 transition"
+        aria-label="Email"
+      >
+        <Mail size={16} />
+      </a>
+      <a
+        href="https://github.com/ermizamr"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="w-12 h-12 bg-white dark:bg-gray-800 rounded-full flex items-center justify-center shadow hover:scale-105 transition"
+        aria-label="GitHub"
+      >
+        <Github size={16} />
+      </a>
+      <a
+        href="#contact"
+        className="w-12 h-12 bg-white dark:bg-gray-800 rounded-full flex items-center justify-center shadow hover:scale-105 transition"
+        aria-label="Contact"
+      >
+        <Sparkles size={16} />
+      </a>
+    </div>
+  );
+}
+
+/* -------- Main Portfolio component (redesigned) -------- */
 export default function Portfolio() {
   const [darkMode, setDarkMode] = useState(false);
   const [mounted, setMounted] = useState(false);
-  // NEW STATE: Tracks which view is currently active
-  const [currentView, setCurrentView] = useState('portfolio'); 
+  const [currentView, setCurrentView] = useState("portfolio");
+  const [selectedProject, setSelectedProject] = useState(null);
 
-  // Initialize after component mounts
   useEffect(() => {
     setMounted(true);
-    
-    // Check if dark mode is preferred or previously selected
-    const isDark = localStorage.getItem('darkMode') === 'true' || 
-                 window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const isDark =
+      localStorage.getItem("darkMode") === "true" ||
+      window.matchMedia("(prefers-color-scheme: dark)").matches;
     setDarkMode(isDark);
   }, []);
 
-  // Update dark mode class and localStorage
   useEffect(() => {
-    if (mounted) {
-      if (darkMode) {
-        document.documentElement.classList.add('dark');
-        localStorage.setItem('darkMode', 'true');
-      } else {
-        document.documentElement.classList.remove('dark');
-        localStorage.setItem('darkMode', 'false');
-      }
+    if (!mounted) return;
+    if (darkMode) {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("darkMode", "true");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("darkMode", "false");
     }
   }, [darkMode, mounted]);
 
-  // Smooth scroll for anchor links
   useEffect(() => {
     const handleAnchorClick = (e) => {
-      const href = e.currentTarget.getAttribute('href');
-      if (href && href.startsWith('#')) {
-        // Intercept click on the Bot Project Card to switch view instead of smooth scrolling
-        if (href === '#bot-page') {
+      const href = e.currentTarget.getAttribute("href");
+      if (href && href.startsWith("#")) {
+        if (href === "#bot-page") {
           e.preventDefault();
-          setCurrentView('bot');
+          setCurrentView("bot");
           return;
         }
-
         e.preventDefault();
-        const element = document.querySelector(href);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }
+        const el = document.querySelector(href);
+        if (el) el.scrollIntoView({ behavior: "smooth" });
       }
     };
-
     const anchorLinks = document.querySelectorAll('a[href^="#"]');
-    anchorLinks.forEach(link => {
-      link.addEventListener('click', handleAnchorClick);
-    });
-
-    return () => {
-      anchorLinks.forEach(link => {
-        link.removeEventListener('click', handleAnchorClick);
-      });
-    };
+    anchorLinks.forEach((l) => l.addEventListener("click", handleAnchorClick));
+    return () =>
+      anchorLinks.forEach((l) =>
+        l.removeEventListener("click", handleAnchorClick)
+      );
   }, [mounted]);
 
-  // Prevent hydration mismatch
   if (!mounted) {
     return (
       <div className="min-h-screen bg-white dark:bg-gray-900 flex items-center justify-center">
@@ -175,108 +290,130 @@ export default function Portfolio() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800 text-gray-900 dark:text-gray-100 antialiased transition-colors duration-300">
-      {/* Animated background elements */}
-      <div className="fixed inset-0 -z-10 overflow-hidden">
-        <div className="absolute -top-40 -right-32 w-80 h-80 bg-purple-300 dark:bg-purple-900 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-xl opacity-20 animate-pulse"></div>
-        <div className="absolute -bottom-40 -left-32 w-80 h-80 bg-blue-300 dark:bg-blue-900 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-xl opacity-20 animate-pulse"></div>
-        <div className="absolute top-40 left-1/2 w-80 h-80 bg-cyan-300 dark:bg-cyan-900 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-xl opacity-20 animate-pulse" style={{ transform: 'translateX(-50%)' }}></div>
+    <div className="min-h-screen bg-gradient-to-b from-white via-sky-50 to-white dark:from-black dark:via-gray-900 dark:to-gray-800 text-gray-900 dark:text-gray-100 antialiased">
+      {/* subtle animated background stars */}
+      <div className="fixed inset-0 -z-20 pointer-events-none">
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-r from-indigo-50 via-transparent to-cyan-50 dark:from-indigo-900/20 dark:via-transparent"
+          animate={{ opacity: [0.6, 0.9, 0.6] }}
+          transition={{ duration: 8, repeat: Infinity }}
+        />
       </div>
 
-      {/* CONDITIONAL RENDERING: Show the Bot Page or the Portfolio */}
-      {currentView === 'bot' ? (
-        <BotPageView onBack={() => setCurrentView('portfolio')} />
+      {currentView === "bot" ? (
+        <BotPageView onBack={() => setCurrentView("portfolio")} />
       ) : (
         <>
-          <header className="w-full max-w-7xl mx-auto p-6 md:p-12">
+          <FloatingSocials />
+
+          <header className="max-w-6xl mx-auto px-6 pt-10">
             <nav className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <motion.div 
-                  whileHover={{ scale: 1.05, rotate: 5 }}
-                  className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center text-white font-bold shadow-lg"
+              <div className="flex items-center gap-4">
+                <motion.div
+                  whileHover={{ rotate: 8, scale: 1.02 }}
+                  className="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-600 to-cyan-500 flex items-center justify-center text-white font-bold shadow-xl"
                 >
-                  Ermi
+                  EZ
                 </motion.div>
                 <div>
                   <h1 className="text-lg font-semibold">Ermi Zamr</h1>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">Technology Enthusiast • Problem Solver</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                    Systems-minded builder & lifelong learner
+                  </p>
                 </div>
               </div>
 
               <div className="flex items-center gap-3">
-                <a href="#projects" className="text-sm px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">Projects</a>
-                <a href="#about" className="text-sm px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">About</a>
-                <a href="#vision" className="text-sm px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">Vision</a>
-                <a href="#contact" className="text-sm px-4 py-2 rounded-md bg-blue-600 text-white shadow hover:brightness-110 transition-all">Contact</a>
-                
-                {/* Dark Mode Toggle */}
+                <a
+                  href="#projects"
+                  className="text-sm px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition"
+                >
+                  Projects
+                </a>
+                <a
+                  href="#about"
+                  className="text-sm px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition"
+                >
+                  About
+                </a>
+                <a
+                  href="#contact"
+                  className="text-sm px-4 py-2 rounded-md bg-indigo-600 text-white shadow hover:brightness-105 transition"
+                >
+                  Contact
+                </a>
+
                 <button
                   onClick={() => setDarkMode(!darkMode)}
-                  className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                  className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition"
                   aria-label="Toggle dark mode"
                 >
-                  {darkMode ? <Sun size={18} /> : <Moon size={18} />}
+                  {darkMode ? <Sun size={16} /> : <Moon size={16} />}
                 </button>
               </div>
             </nav>
           </header>
 
-          <header className="w-full max-w-7xl mx-auto p-6 md:p-12">
-            {/* Hero Section */}
-            <section className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center py-12 md:py-20">
+          {/* HERO */}
+          <main className="max-w-6xl mx-auto px-6 py-12">
+            <section className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
               <motion.div
-                initial={{ opacity: 0, x: -30 }}
+                initial={{ opacity: 0, x: -24 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6 }}
               >
-                <p className="text-sm text-blue-600 dark:text-blue-400 font-medium mb-3 flex items-center gap-2">
-                  <Sparkles size={14} /> Self-Taught Developer
-                </p>
-                <h2 className="text-3xl md:text-4xl font-extrabold leading-tight">
-                  Building systems with{" "}
-                  <span className="bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
-                    computational thinking
-                  </span>
-                </h2>
-                <p className="mt-4 text-gray-600 dark:text-gray-400">
-                  Technology enthusiast focused on software development, computational thinking, and modern engineering principles. 
-                  I approach problems by breaking ideas into components, analyzing constraints, and designing practical solutions.
+                <p className="inline-flex items-center gap-2 text-sm font-medium text-indigo-600 dark:text-indigo-400">
+                  <Sparkles size={14} /> Self-taught · Systems thinking
                 </p>
 
-                <div className="mt-6 flex gap-3 flex-wrap">
-                  <a href="#projects" className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:brightness-105 transition-all">
+                <h2 className="mt-4 text-4xl md:text-5xl font-extrabold leading-tight">
+                  Ermi Zamr —{" "}
+                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-cyan-400">
+                    building practical systems
+                  </span>
+                </h2>
+
+                <p className="mt-4 text-gray-600 dark:text-gray-300 max-w-xl">
+                  I design small systems and tools with clarity and curiosity — from Telegram bots
+                  to front-end experiments. I value clear architecture, incremental learning,
+                  and code that helps others understand the idea.
+                </p>
+
+                <div className="mt-6 flex flex-wrap gap-3">
+                  <a
+                    href="#projects"
+                    className="inline-flex items-center gap-2 px-4 py-3 bg-indigo-600 text-white rounded-lg shadow-lg hover:scale-105 transition"
+                  >
                     <Code size={16} /> View Projects
                   </a>
-                  
-                  {/* NEW BUTTON: Switches the view to the embedded bot page */}
-                  <button 
-                    onClick={() => setCurrentView('bot')} 
-                    className="inline-flex items-center gap-2 px-4 py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 dark:border-blue-500 dark:text-blue-400 dark:hover:bg-blue-700 transition-colors"
+
+                  <button
+                    onClick={() => setCurrentView("bot")}
+                    className="inline-flex items-center gap-2 px-4 py-3 border border-indigo-200 dark:border-indigo-600 text-indigo-700 dark:text-indigo-200 rounded-lg hover:bg-indigo-50 dark:hover:bg-indigo-900 transition"
                   >
                     <Bot size={16} /> Launch Bot Page
                   </button>
 
-                  <a href="#contact" className="inline-flex items-center gap-2 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                  <a
+                    href="#contact"
+                    className="inline-flex items-center gap-2 px-4 py-3 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"
+                  >
                     <Mail size={16} /> Get in touch
                   </a>
-                  <button className="inline-flex items-center gap-2 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-                    <Download size={16} /> Download CV
-                  </button>
                 </div>
 
-                {/* Stats */}
-                <div className="mt-8 flex gap-6 text-sm">
+                <div className="mt-8 flex gap-6">
                   <div>
-                    <div className="font-semibold text-lg">3+</div>
-                    <div className="text-gray-500 dark:text-gray-400">Projects</div>
+                    <div className="text-2xl font-semibold">3+</div>
+                    <div className="text-sm text-gray-500 dark:text-gray-400">Projects</div>
                   </div>
                   <div>
-                    <div className="font-semibold text-lg">1+</div>
-                    <div className="text-gray-500 dark:text-gray-400">Year Learning</div>
+                    <div className="text-2xl font-semibold">1+</div>
+                    <div className="text-sm text-gray-500 dark:text-gray-400">Year learning</div>
                   </div>
                   <div>
-                    <div className="font-semibold text-lg">100%</div>
-                    <div className="text-gray-500 dark:text-gray-400">Curiosity</div>
+                    <div className="text-2xl font-semibold">100%</div>
+                    <div className="text-sm text-gray-500 dark:text-gray-400">Curiosity</div>
                   </div>
                 </div>
               </motion.div>
@@ -287,348 +424,344 @@ export default function Portfolio() {
                 transition={{ duration: 0.6 }}
                 className="relative"
               >
-                <div>
-                  <img 
-                    src="https://i.ibb.co/NgyM9t13/5913428015746583538-121.jpg" alt="5913428015746583538-121" 
-                    alt="Ermi Zamr - Technology Enthusiast" 
+                <div className="rounded-3xl overflow-hidden shadow-2xl border border-gray-100 dark:border-gray-700">
+                  <img
+                    src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=60"
+                    alt="Ermi Zamr"
+                    className="object-cover w-full h-80"
                   />
                 </div>
-                <motion.div 
+
+                <motion.div
                   animate={{ y: [0, -10, 0] }}
                   transition={{ duration: 4, repeat: Infinity }}
-                  className="absolute -top-4 -right-4 bg-white dark:bg-gray-800 p-3 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700"
+                  className="absolute -top-6 -right-6 bg-white dark:bg-gray-800 p-3 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700"
                 >
-                  <Zap className="text-yellow-500" size={20} />
+                  <Zap className="text-yellow-500" size={18} />
                 </motion.div>
               </motion.div>
             </section>
 
-            {/* Technical Skills */}
-            <section className="py-8 md:py-14">
-              <h3 className="text-2xl font-bold mb-8">Technical Skills</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow border border-gray-200 dark:border-gray-700">
-                  <h4 className="font-semibold mb-4 flex items-center gap-2">
-                    <Code size={18} className="text-blue-500" />
-                    Programming & Development
-                  </h4>
-                  <div className="grid grid-cols-2 gap-3 text-sm">
-                    {[
-                      { skill: "Python", level: "Intermediate" },
-                      { skill: "JavaScript", level: "Beginner" },
-                      { skill: "HTML/CSS", level: "Intermediate" },
-                      { skill: "SQL", level: "Beginner" },
-                      { skill: "Git", level: "Intermediate" },
-                      { skill: "TailwindCSS", level: "Learning" },
-                    ].map((item) => (
-                      <div key={item.skill} className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
-                        <span>{item.skill}</span>
-                        <span className={`text-xs px-2 py-1 rounded-full ${
-                          item.level === 'Intermediate' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' :
-                          item.level === 'Beginner' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' :
-                          'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200'
-                        }`}>
-                          {item.level}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
+            {/* SKILLS */}
+            <section className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="p-6 rounded-2xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 shadow">
+                <h4 className="font-semibold flex items-center gap-2">
+                  <Code size={18} className="text-indigo-500" /> Programming
+                </h4>
+                <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
+                  {[
+                    { skill: "Python", level: "Intermediate" },
+                    { skill: "JavaScript", level: "Beginner" },
+                    { skill: "HTML/CSS", level: "Intermediate" },
+                    { skill: "SQL", level: "Beginner" },
+                  ].map((it) => (
+                    <div key={it.skill} className="flex justify-between items-center">
+                      <span>{it.skill}</span>
+                      <span className="text-xs px-2 py-1 rounded-full bg-indigo-50 text-indigo-700">
+                        {it.level}
+                      </span>
+                    </div>
+                  ))}
                 </div>
+              </div>
 
-                <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow border border-gray-200 dark:border-gray-700">
-                  <h4 className="font-semibold mb-4 flex items-center gap-2">
-                    <Layers size={18} className="text-green-500" />
-                    Tools & Platforms
-                  </h4>
-                  <div className="grid grid-cols-2 gap-3 text-sm">
-                    {[
-                      { skill: "Telegram Bot API", level: "Intermediate" },
-                      { skill: "PostgreSQL", level: "Basic" },
-                      { skill: "SQLite", level: "Intermediate" },
-                      { skill: "VS Code", level: "Advanced" },
-                      { skill: "GitHub Pages", level: "Intermediate" },
-                      { skill: "Render.com", level: "Intermediate" },
-                    ].map((item) => (
-                      <div key={item.skill} className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
-                        <span>{item.skill}</span>
-                        <span className={`text-xs px-2 py-1 rounded-full ${
-                          item.level === 'Intermediate' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' :
-                          item.level === 'Advanced' ? 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200' :
-                          'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200'
-                        }`}>
-                          {item.level}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
+              <div className="p-6 rounded-2xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 shadow">
+                <h4 className="font-semibold flex items-center gap-2">
+                  <Layers size={18} className="text-green-500" /> Tools & Platforms
+                </h4>
+                <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
+                  {[
+                    { skill: "Telegram Bot API", level: "Intermediate" },
+                    { skill: "SQLite", level: "Intermediate" },
+                    { skill: "Git", level: "Intermediate" },
+                    { skill: "Tailwind", level: "Learning" },
+                  ].map((it) => (
+                    <div key={it.skill} className="flex justify-between items-center">
+                      <span>{it.skill}</span>
+                      <span className="text-xs px-2 py-1 rounded-full bg-green-50 text-green-700">
+                        {it.level}
+                      </span>
+                    </div>
+                  ))}
                 </div>
+              </div>
+
+              <div className="p-6 rounded-2xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 shadow">
+                <h4 className="font-semibold flex items-center gap-2">
+                  <Brain className="text-purple-500" /> Personal Skills
+                </h4>
+                <ul className="mt-4 text-sm space-y-2 text-gray-600 dark:text-gray-300">
+                  <li>Strong analytical thinking</li>
+                  <li>Fast self-learner</li>
+                  <li>System & architecture thinking</li>
+                </ul>
               </div>
             </section>
 
-            {/* Projects */}
-            <section id="projects" className="py-8 md:py-14">
-              <div className="flex items-center justify-between mb-6">
+            {/* PROJECTS GALLERY */}
+            <section id="projects" className="mt-12">
+              <div className="flex items-center justify-between mb-4">
                 <div>
-                  <h3 className="text-2xl font-bold">Technical Projects</h3>
-                  <p className="text-gray-600 dark:text-gray-400 mt-2">Real projects building practical skills</p>
+                  <h3 className="text-2xl font-bold">Projects</h3>
+                  <p className="text-gray-600 dark:text-gray-400 mt-1">Selected work and experiments</p>
                 </div>
               </div>
 
-              <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
                 {projects.map((p, i) => (
-                  <motion.a // Changed to motion.a
-                    href={p.url} // Use the url from the projects array
-                    onClick={p.url === '#bot-page' ? (e) => { e.preventDefault(); setCurrentView('bot'); } : null}
+                  <motion.div
                     key={p.id}
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 16 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.1 }}
-                    className={`group block rounded-2xl overflow-hidden shadow hover:shadow-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 ${
-                      p.featured ? 'ring-2 ring-blue-500' : ''
-                    }`}
-                    whileHover={{ y: -8 }}
-                    // Open external links in a new tab safely
-                    target={p.url && p.url.startsWith('http') ? '_blank' : undefined}
-                    rel={p.url && p.url.startsWith('http') ? 'noopener noreferrer' : undefined}
+                    transition={{ delay: i * 0.08 }}
+                    className={`group relative rounded-2xl overflow-hidden shadow-lg border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800`}
                   >
-                    {p.featured && (
-                      <div className="absolute top-4 left-4 bg-blue-500 text-white px-2 py-1 rounded-full text-xs font-medium z-10">
-                        Featured
-                      </div>
-                    )}
-                    <div className="h-40 md:h-36 overflow-hidden relative">
-                      <img 
-                        src={p.img} 
-                        alt={p.title} 
-                        className="w-full h-full object-cover transform group-hover:scale-110 transition duration-500" 
+                    <div className="relative h-44">
+                      <img
+                        src={p.img}
+                        alt={p.title}
+                        className="object-cover w-full h-full transform group-hover:scale-105 transition duration-500"
                       />
-                      <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300"></div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition" />
+                      {p.featured && (
+                        <div className="absolute top-3 left-3 bg-indigo-600 text-white px-2 py-1 rounded-full text-xs font-medium">
+                          Featured
+                        </div>
+                      )}
                     </div>
+
                     <div className="p-4">
-                      <h4 className="font-semibold">{p.title}</h4>
-                      <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">{p.desc}</p>
-                      <div className="mt-3 flex flex-wrap gap-2">
-                        {p.tags.map((t) => (
-                          <span 
-                            key={t} 
-                            className="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded-full"
+                      <h4 className="font-semibold text-lg">{p.title}</h4>
+                      <p className="text-sm text-gray-600 dark:text-gray-300 mt-2 line-clamp-3">
+                        {p.desc}
+                      </p>
+
+                      <div className="mt-4 flex items-center justify-between">
+                        <div className="flex flex-wrap gap-2">
+                          {p.tags.map((t) => (
+                            <span
+                              key={t}
+                              className="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded-full"
+                            >
+                              {t}
+                            </span>
+                          ))}
+                        </div>
+
+                        <div className="flex items-center gap-2">
+                          {p.url && p.url.startsWith("http") ? (
+                            <a
+                              href={p.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1 px-3 py-2 bg-indigo-600 text-white rounded-lg text-sm hover:brightness-105 transition"
+                              aria-label={`Open ${p.title} live`}
+                            >
+                              <ExternalLink size={14} /> Live
+                            </a>
+                          ) : (
+                            <button
+                              onClick={() => {
+                                // open Bot page or no-op
+                                if (p.url === "#bot-page") {
+                                  setCurrentView("bot");
+                                }
+                              }}
+                              className="inline-flex items-center gap-1 px-3 py-2 bg-indigo-50 text-indigo-700 rounded-lg text-sm hover:bg-indigo-100 transition"
+                            >
+                              Open
+                            </button>
+                          )}
+
+                          <button
+                            onClick={() => setSelectedProject(p)}
+                            className="inline-flex items-center gap-1 px-3 py-2 border border-gray-200 dark:border-gray-700 rounded-lg text-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition"
+                            aria-label={`Preview ${p.title}`}
                           >
-                            {t}
-                          </span>
-                        ))}
+                            Details
+                          </button>
+                        </div>
                       </div>
                     </div>
-                  </motion.a>
+                  </motion.div>
                 ))}
               </div>
             </section>
 
-            {/* About Me */}
-            <section id="about" className="py-8 md:py-14 grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="md:col-span-2 bg-white dark:bg-gray-800 p-6 rounded-2xl shadow border border-gray-200 dark:border-gray-700">
+            {/* ABOUT */}
+            <section id="about" className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="md:col-span-2 bg-white dark:bg-gray-800 p-6 rounded-2xl border border-gray-100 dark:border-gray-700 shadow">
                 <h3 className="text-xl font-bold mb-4">Technical Approach & Mindset</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-4">
-                  I am a self-taught technology enthusiast with a growing focus on software development, 
-                  computational thinking, and modern engineering principles. I enjoy approaching problems 
-                  the way experienced engineers do—breaking ideas into components, analyzing constraints, 
-                  and designing practical solutions.
-                </p>
-                
-                <p className="text-gray-600 dark:text-gray-400 mb-4">
-                  Over the past year, I've actively built projects that strengthen my technical foundation, 
-                  including Telegram bots, small web applications, and experiments involving databases, 
-                  cloud platforms, and automation. I value clean systems, clear logic, and continuous learning.
+                <p className="text-gray-600 dark:text-gray-300">
+                  I approach engineering with a systems mindset — break problems down, validate assumptions,
+                  and iterate. I focus on practical, well-documented projects that teach me something useful.
                 </p>
 
-                <h4 className="font-semibold mt-6 mb-3">Learning Philosophy</h4>
-                <ul className="text-gray-600 dark:text-gray-400 space-y-2">
-                  <li className="flex items-start gap-2">
-                    <Zap size={16} className="text-blue-500 mt-0.5 flex-shrink-0" />
-                    <span>Build solutions, not just features - focus on practical implementation</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Target size={16} className="text-green-500 mt-0.5 flex-shrink-0" />
-                    <span>Break complex problems into manageable system components</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <School size={16} className="text-purple-500 mt-0.5 flex-shrink-0" />
-                    <span>Continuous learning through hands-on project development</span>
-                  </li>
-                </ul>
+                <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <h4 className="font-semibold">Learning Philosophy</h4>
+                    <ul className="mt-2 text-sm text-gray-600 dark:text-gray-300 space-y-2">
+                      <li>Build small, usable systems</li>
+                      <li>Keep architecture simple & explicit</li>
+                      <li>Document decisions & reasoning</li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h4 className="font-semibold">Education</h4>
+                    <div className="mt-2 text-sm text-gray-600 dark:text-gray-300">
+                      Grade 12 Leaving Certificate (2025). Ongoing self-study in software,
+                      algorithms, and computational thinking.
+                    </div>
+                  </div>
+                </div>
               </div>
 
               <div className="space-y-6">
-                <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow border border-gray-200 dark:border-gray-700">
-                  <h4 className="font-semibold mb-4 flex items-center gap-2">
-                    <Brain size={18} className="text-purple-500" />
-                    Personal Skills
-                  </h4>
-                  <div className="space-y-3 text-sm">
-                    {['Strong analytical thinking', 'Fast self-learner', 'System thinking', 'Independent problem-solving', 'Growth mindset'].map((skill) => (
-                      <div key={skill} className="flex items-center gap-2">
-                        <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                        <span className="text-gray-600 dark:text-gray-400">{skill}</span>
-                      </div>
-                    ))}
-                  </div>
+                <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl border border-gray-100 dark:border-gray-700 shadow">
+                  <h4 className="font-semibold mb-3">Personal Skills</h4>
+                  <ul className="text-sm text-gray-600 dark:text-gray-300 space-y-2">
+                    <li>Analytical thinking</li>
+                    <li>Fast self-learner</li>
+                    <li>Independent problem-solving</li>
+                  </ul>
                 </div>
 
-                <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow border border-gray-200 dark:border-gray-700">
-                  <h4 className="font-semibold mb-4 flex items-center gap-2">
-                    <Globe size={18} className="text-cyan-500" />
-                    Interests
-                  </h4>
-                  <div className="space-y-3 text-sm">
-                    {['Quantum Computing', 'Computational Thinking', 'System Architecture', 'Scientific Computing', 'Algorithm Design'].map((interest) => (
-                      <div key={interest} className="flex items-center gap-2">
-                        <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                        <span className="text-gray-600 dark:text-gray-400">{interest}</span>
-                      </div>
-                    ))}
-                  </div>
+                <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl border border-gray-100 dark:border-gray-700 shadow">
+                  <h4 className="font-semibold mb-3">Interests</h4>
+                  <ul className="text-sm text-gray-600 dark:text-gray-300 space-y-2">
+                    <li>Quantum computing</li>
+                    <li>System architecture</li>
+                    <li>Scientific computing</li>
+                  </ul>
                 </div>
               </div>
             </section>
 
-            {/* Vision & Goals */}
-            <section id="vision" className="py-8 md:py-14">
-              <div className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow border border-gray-200 dark:border-gray-700">
-                <h3 className="text-2xl font-bold mb-6">Vision & Learning Path</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* CONTACT */}
+            <section id="contact" className="mt-12">
+              <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl border border-gray-100 dark:border-gray-700 shadow">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <h4 className="font-semibold mb-4 flex items-center gap-2 text-lg">
-                      <Target className="text-blue-500" size={20} />
-                      Long-term Goals
-                    </h4>
-                    <p className="text-gray-600 dark:text-gray-400 mb-4">
-                      My long-term goal is to become an engineer who can design, analyze, and build systems 
-                      at different levels—from software to scientific ideas.
+                    <h3 className="text-xl font-bold">Let's Discuss Technology</h3>
+                    <p className="mt-2 text-gray-600 dark:text-gray-300">
+                      Interested in computational thinking, system design, or collaboration? Reach out.
                     </p>
-                    <ul className="text-gray-600 dark:text-gray-400 space-y-2 text-sm">
-                      {[
-                        "Strong foundations in software development",
-                        "Advanced mathematical reasoning",
-                        "Quantum science and computation",
-                        "Engineering problem-solving",
-                        "Real-world system building"
-                      ].map((goal, index) => (
-                        <li key={index} className="flex items-start gap-2">
-                          <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                          <span>{goal}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  
-                  <div>
-                    <h4 className="font-semibold mb-4 flex items-center gap-2 text-lg">
-                      <School className="text-green-500" size={20} />
-                      Education & Self-Study
-                    </h4>
-                    <div className="mb-4">
-                      <div className="font-medium">Grade 12 Leaving Certificate (2025)</div>
-                      <div className="text-sm text-gray-500 dark:text-gray-400">Mathematics, Natural Sciences, Technology</div>
-                    </div>
-                    <p className="text-gray-600 dark:text-gray-400 text-sm">
-                      Ongoing self-studies in software development, algorithms, quantum principles, 
-                      and problem-solving methods used by experienced engineers.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </section>
 
-            {/* Contact */}
-            <section id="contact" className="py-8 md:py-14">
-              <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow border border-gray-200 dark:border-gray-700 grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div>
-                  <h3 className="text-xl font-bold">Let's Discuss Technology</h3>
-                  <p className="mt-2 text-gray-600 dark:text-gray-400">
-                    Interested in computational thinking, system design, or technology learning paths? 
-                    I'm always open to discussing ideas and opportunities.
-                  </p>
-
-                  <div className="mt-6 space-y-3 text-sm text-gray-600 dark:text-gray-400">
-                    <div className="flex items-center gap-3">
-                      <Mail size={16} />
-                      <span>ermizamr197@gmail.com</span>
+                    <div className="mt-6 space-y-3 text-sm text-gray-600 dark:text-gray-300">
+                      <div className="flex items-center gap-3">
+                        <Mail size={16} />
+                        <span>ermizamr197@gmail.com</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <Github size={16} />
+                        <a
+                          href="https://github.com/ermizamr"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="underline hover:text-indigo-600"
+                        >
+                          github.com/ermizamr
+                        </a>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <Github size={16} />
-                      <a href="https://github.com/ermizamr" className="underline hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                        github.com/ermizamr
+
+                    <div className="mt-6 flex gap-3">
+                      <a
+                        href="https://github.com/ermizamr"
+                        className="inline-flex items-center gap-2 px-4 py-2 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700"
+                      >
+                        <Github size={14} /> GitHub
+                      </a>
+                      <a
+                        href="#contact"
+                        className="inline-flex items-center gap-2 px-4 py-2 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700"
+                      >
+                        <Linkedin size={14} /> LinkedIn
                       </a>
                     </div>
                   </div>
 
-                  <div className="mt-6 flex gap-3">
-                    <a href="https://github.com/ermizamr" className="inline-flex items-center gap-2 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                      <Github size={14} /> GitHub
-                    </a>
-                    <a href="#" className="inline-flex items-center gap-2 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                      <Linkedin size={14} /> LinkedIn
-                    </a>
-                  </div>
+                  <form
+                    action="https://formspree.io/f/xzzyjvvv"
+                    method="POST"
+                    className="space-y-4"
+                  >
+                    <div>
+                      <label htmlFor="name" className="block text-sm mb-2">
+                        Your name
+                      </label>
+                      <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        className="w-full px-4 py-2 border border-gray-200 dark:border-gray-700 rounded-md bg-transparent focus:ring-2 focus:ring-indigo-500"
+                        placeholder="Jane Doe"
+                        required
+                      />
+                    </div>
+
+                    <div>
+                      <label htmlFor="email" className="block text-sm mb-2">
+                        Email
+                      </label>
+                      <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        className="w-full px-4 py-2 border border-gray-200 dark:border-gray-700 rounded-md bg-transparent focus:ring-2 focus:ring-indigo-500"
+                        placeholder="jane@company.com"
+                        required
+                      />
+                    </div>
+
+                    <div>
+                      <label htmlFor="message" className="block text-sm mb-2">
+                        Message
+                      </label>
+                      <textarea
+                        id="message"
+                        name="message"
+                        className="w-full px-4 py-2 border border-gray-200 dark:border-gray-700 rounded-md bg-transparent focus:ring-2 focus:ring-indigo-500"
+                        rows={4}
+                        placeholder="Let's discuss technology and systems..."
+                        required
+                      />
+                    </div>
+
+                    <button
+                      type="submit"
+                      className="w-full px-4 py-3 bg-indigo-600 text-white rounded-md hover:brightness-105 transition flex items-center justify-center gap-2"
+                    >
+                      <Mail size={16} />
+                      Send Message
+                    </button>
+                  </form>
                 </div>
-
-                {/* Formspree Form - Replace YOUR_FORM_ID_HERE with your actual Formspree ID */}
-                <form 
-                  action="https://formspree.io/f/xzzyjvvv" 
-                  method="POST"
-                  className="space-y-4"
-                >
-                  <div>
-                    <label htmlFor="name" className="block text-sm mb-2">Your name</label>
-                    <input 
-                      type="text"
-                      id="name"
-                      name="name" 
-                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-transparent focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" 
-                      placeholder="Jane Doe" 
-                      required 
-                    />
-                  </div>
-                  
-                  <div>
-                    <label htmlFor="email" className="block text-sm mb-2">Email</label>
-                    <input 
-                      type="email"
-                      id="email"
-                      name="email" 
-                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-transparent focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" 
-                      placeholder="jane@company.com" 
-                      required 
-                    />
-                  </div>
-                  
-                  <div>
-                    <label htmlFor="message" className="block text-sm mb-2">Message</label>
-                    <textarea 
-                      id="message"
-                      name="message" 
-                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-transparent focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" 
-                      rows={4} 
-                      placeholder="Let's discuss technology and systems..." 
-                      required 
-                    />
-                  </div>
-
-                  <button type="submit" className="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors flex items-center justify-center gap-2">
-                    <Mail size={16} />
-                    Send Message
-                  </button>
-                </form>
               </div>
             </section>
 
-            <footer className="py-10 text-center text-sm text-gray-500 dark:text-gray-400">
+            <footer className="mt-12 text-center text-sm text-gray-500 dark:text-gray-400 py-10">
               <div className="flex items-center justify-center gap-2">
-                <span>Built with analytical thinking and</span>
+                <span>Built with clarity and</span>
                 <Heart size={14} className="text-red-500" />
               </div>
-              <div className="mt-2">© {new Date().getFullYear()} Ermi Zamr — Focused on continuous learning and system thinking</div>
+              <div className="mt-2">© {new Date().getFullYear()} Ermi Zamr</div>
             </footer>
-          </header>
+          </main>
+
+          {/* Project Modal */}
+          <AnimatePresence>
+            {selectedProject && (
+              <ProjectModal
+                project={selectedProject}
+                onClose={(openBot = false) => {
+                  setSelectedProject(null);
+                  if (openBot) setCurrentView("bot");
+                }}
+              />
+            )}
+          </AnimatePresence>
         </>
       )}
     </div>
