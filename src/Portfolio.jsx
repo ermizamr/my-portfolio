@@ -195,7 +195,7 @@ export default function Portfolio() {
                   whileHover={{ scale: 1.05, rotate: 5 }}
                   className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center text-white font-bold shadow-lg"
                 >
-                  EZ
+                  Ermi
                 </motion.div>
                 <div>
                   <h1 className="text-lg font-semibold">Ermi Zamr</h1>
@@ -289,7 +289,7 @@ export default function Portfolio() {
               >
                 <div className="rounded-2xl overflow-hidden shadow-2xl border border-gray-200 dark:border-gray-700">
                   <img 
-                    src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=60" 
+                    src="https://i.ibb.co/NgyM9t13/5913428015746583538-121.jpg" alt="5913428015746583538-121" 
                     alt="Ermi Zamr - Technology Enthusiast" 
                     className="object-cover w-full h-64 md:h-80" 
                   />
