@@ -1,73 +1,82 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
-  Mail,
-  Github,
-  Linkedin,
-  Briefcase,
-  Code,
-  Cpu,
-  Layers,
-  Moon,
-  Sun,
-  Download,
-  Sparkles,
-  Globe,
-  Zap,
-  Heart,
-  Database,
-  Bot,
-  School,
-  Target,
+  Mail,
+  Github,
+  Linkedin,
+  Briefcase,
+  Code,
+  Cpu,
+  Layers,
+  Moon,
+  Sun,
+  Download,
+  Sparkles,
+  Globe,
+  Zap,
+  Heart,
+  Database,
+  Bot,
+  School,
+  Target,
 } from "lucide-react";
 
 const projects = [
-  {
-    id: 1,
-    title: "Space-Themed Telegram Bot",
-    desc: "Personal learning project delivering space-related information, news, and satellite updates with scalable architecture.",
-    tags: ["Python", "Telegram API", "SQLite", "API Integration"],
-    // If you want the project card to link to the new embedded page, use this path.
-    url: "#bot-page", 
-    img: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=1200&q=60",
-    featured: true,
-  },
-  {
-    id: 2,
-    title: "Portfolio Website",
-    desc: "Clean, modern personal website built with component-based architecture and responsive design principles.",
-    tags: ["JavaScript", "React", "TailwindCSS", "GitHub Pages"],
-    url: "#",
-    img: "https://images.unsplash.com/photo-1508921912186-1d1a45ebb3c1?auto=format&fit=crop&w=1200&q=60",
-    featured: false,
-  },
-  {
-    id: 3,
-    title: "Bot Admin Tools & Templates",
-    desc: "Management scripts and configuration templates for efficient bot development and testing workflows.",
-    tags: ["Python", "Automation", "Cloud Deployment", "System Design"],
-    url: "#",
-    img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1200&q=60",
-    featured: true,
-  },
+  {
+    id: 1,
+    title: "Space-Themed Telegram Bot",
+    desc: "Personal learning project delivering space-related information, news, and satellite updates with scalable architecture.",
+    tags: ["Python", "Telegram API", "SQLite", "API Integration"],
+    // If you want the project card to link to the new embedded page, use this path.
+    url: "#bot-page", 
+    img: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=1200&q=60",
+    featured: true,
+  },
+  {
+    id: 2,
+    title: "Portfolio Website",
+    desc: "Clean, modern personal website built with component-based architecture and responsive design principles.",
+    tags: ["JavaScript", "React", "TailwindCSS", "GitHub Pages"],
+    url: "#",
+    img: "https://images.unsplash.com/photo-1508921912186-1d1a45ebb3c1?auto=format&fit=crop&w=1200&q=60",
+    featured: false,
+  },
+  {
+    id: 3,
+    title: "Bot Admin Tools & Templates",
+    desc: "Management scripts and configuration templates for efficient bot development and testing workflows.",
+    tags: ["Python", "Automation", "Cloud Deployment", "System Design"],
+    url: "#",
+    img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1200&q=60",
+    featured: true,
+  },
+  {
+    id: 4,
+    title: "Space for ET",
+    desc: "A space-themed frontend project — live at space-for-et.vercel.app. Showcases UI and space content delivered on Vercel.",
+    tags: ["Next.js", "Vercel", "Frontend", "Space"],
+    url: "https://space-for-et.vercel.app",
+    img: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=1200&q=60",
+    featured: false,
+  },
 ];
 
 // Brain icon component
 function Brain(props) {
-  return (
-    <svg
-      {...props}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z" />
-      <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z" />
-    </svg>
-  );
+  return (
+    <svg
+      {...props}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z" />
+      <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z" />
+    </svg>
+  );
 }
 
 // NEW COMPONENT: Renders the embedded HTML page
@@ -96,39 +105,39 @@ const BotPageView = ({ onBack }) => (
 
 
 export default function Portfolio() {
-  const [darkMode, setDarkMode] = useState(false);
-  const [mounted, setMounted] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
+  const [mounted, setMounted] = useState(false);
   // NEW STATE: Tracks which view is currently active
   const [currentView, setCurrentView] = useState('portfolio'); 
 
-  // Initialize after component mounts
-  useEffect(() => {
-    setMounted(true);
-    
-    // Check if dark mode is preferred or previously selected
-    const isDark = localStorage.getItem('darkMode') === 'true' || 
-                   window.matchMedia('(prefers-color-scheme: dark)').matches;
-    setDarkMode(isDark);
-  }, []);
+  // Initialize after component mounts
+  useEffect(() => {
+    setMounted(true);
+    
+    // Check if dark mode is preferred or previously selected
+    const isDark = localStorage.getItem('darkMode') === 'true' || 
+                 window.matchMedia('(prefers-color-scheme: dark)').matches;
+    setDarkMode(isDark);
+  }, []);
 
-  // Update dark mode class and localStorage
-  useEffect(() => {
-    if (mounted) {
-      if (darkMode) {
-        document.documentElement.classList.add('dark');
-        localStorage.setItem('darkMode', 'true');
-      } else {
-        document.documentElement.classList.remove('dark');
-        localStorage.setItem('darkMode', 'false');
-      }
-    }
-  }, [darkMode, mounted]);
+  // Update dark mode class and localStorage
+  useEffect(() => {
+    if (mounted) {
+      if (darkMode) {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('darkMode', 'true');
+      } else {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('darkMode', 'false');
+      }
+    }
+  }, [darkMode, mounted]);
 
-  // Smooth scroll for anchor links
-  useEffect(() => {
-    const handleAnchorClick = (e) => {
-      const href = e.currentTarget.getAttribute('href');
-      if (href && href.startsWith('#')) {
+  // Smooth scroll for anchor links
+  useEffect(() => {
+    const handleAnchorClick = (e) => {
+      const href = e.currentTarget.getAttribute('href');
+      if (href && href.startsWith('#')) {
         // Intercept click on the Bot Project Card to switch view instead of smooth scrolling
         if (href === '#bot-page') {
           e.preventDefault();
@@ -136,43 +145,43 @@ export default function Portfolio() {
           return;
         }
 
-        e.preventDefault();
-        const element = document.querySelector(href);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }
-      }
-    };
+        e.preventDefault();
+        const element = document.querySelector(href);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    };
 
-    const anchorLinks = document.querySelectorAll('a[href^="#"]');
-    anchorLinks.forEach(link => {
-      link.addEventListener('click', handleAnchorClick);
-    });
+    const anchorLinks = document.querySelectorAll('a[href^="#"]');
+    anchorLinks.forEach(link => {
+      link.addEventListener('click', handleAnchorClick);
+    });
 
-    return () => {
-      anchorLinks.forEach(link => {
-        link.removeEventListener('click', handleAnchorClick);
-      });
-    };
-  }, [mounted]);
+    return () => {
+      anchorLinks.forEach(link => {
+        link.removeEventListener('click', handleAnchorClick);
+      });
+    };
+  }, [mounted]);
 
-  // Prevent hydration mismatch
-  if (!mounted) {
-    return (
-      <div className="min-h-screen bg-white dark:bg-gray-900 flex items-center justify-center">
-        <div className="text-lg">Loading...</div>
-      </div>
-    );
-  }
+  // Prevent hydration mismatch
+  if (!mounted) {
+    return (
+      <div className="min-h-screen bg-white dark:bg-gray-900 flex items-center justify-center">
+        <div className="text-lg">Loading...</div>
+      </div>
+    );
+  }
 
-  return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800 text-gray-900 dark:text-gray-100 antialiased transition-colors duration-300">
-      {/* Animated background elements */}
-      <div className="fixed inset-0 -z-10 overflow-hidden">
-        <div className="absolute -top-40 -right-32 w-80 h-80 bg-purple-300 dark:bg-purple-900 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-xl opacity-20 animate-pulse"></div>
-        <div className="absolute -bottom-40 -left-32 w-80 h-80 bg-blue-300 dark:bg-blue-900 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-xl opacity-20 animate-pulse" style={{ animationDelay: '2s' }}></div>
-        <div className="absolute top-40 left-1/2 w-80 h-80 bg-cyan-300 dark:bg-cyan-900 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-xl opacity-20 animate-pulse" style={{ animationDelay: '4s' }}></div>
-      </div>
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-800 text-gray-900 dark:text-gray-100 antialiased transition-colors duration-300">
+      {/* Animated background elements */}
+      <div className="fixed inset-0 -z-10 overflow-hidden">
+        <div className="absolute -top-40 -right-32 w-80 h-80 bg-purple-300 dark:bg-purple-900 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-xl opacity-20 animate-pulse"></div>
+        <div className="absolute -bottom-40 -left-32 w-80 h-80 bg-blue-300 dark:bg-blue-900 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-xl opacity-20 animate-pulse"></div>
+        <div className="absolute top-40 left-1/2 w-80 h-80 bg-cyan-300 dark:bg-cyan-900 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-xl opacity-20 animate-pulse" style={{ transform: 'translateX(-50%)' }}></div>
+      </div>
 
       {/* CONDITIONAL RENDERING: Show the Bot Page or the Portfolio */}
       {currentView === 'bot' ? (
@@ -242,7 +251,7 @@ export default function Portfolio() {
                   {/* NEW BUTTON: Switches the view to the embedded bot page */}
                   <button 
                     onClick={() => setCurrentView('bot')} 
-                    className="inline-flex items-center gap-2 px-4 py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 dark:border-blue-500 dark:text-blue-400 dark:hover:bg-blue-900 transition-colors"
+                    className="inline-flex items-center gap-2 px-4 py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 dark:border-blue-500 dark:text-blue-400 dark:hover:bg-blue-700 transition-colors"
                   >
                     <Bot size={16} /> Launch Bot Page
                   </button>
@@ -379,6 +388,9 @@ export default function Portfolio() {
                       p.featured ? 'ring-2 ring-blue-500' : ''
                     }`}
                     whileHover={{ y: -8 }}
+                    // Open external links in a new tab safely
+                    target={p.url && p.url.startsWith('http') ? '_blank' : undefined}
+                    rel={p.url && p.url.startsWith('http') ? 'noopener noreferrer' : undefined}
                   >
                     {p.featured && (
                       <div className="absolute top-4 left-4 bg-blue-500 text-white px-2 py-1 rounded-full text-xs font-medium z-10">
