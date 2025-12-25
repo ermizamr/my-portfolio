@@ -291,7 +291,6 @@ export default function Portfolio() {
                   <img 
                     src="https://i.ibb.co/NgyM9t13/5913428015746583538-121.jpg" alt="5913428015746583538-121" 
                     alt="Ermi Zamr - Technology Enthusiast" 
-                    className="object-cover w-full h-64 md:h-80" 
                   />
                 </div>
                 <motion.div 
