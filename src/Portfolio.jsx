@@ -39,7 +39,7 @@ const projects = [
     tags: ["Python", "Telegram API", "SQLite", "API Integration"],
     url: "#bot-page",
     img:
-      "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=1600&q=60",
+      "https://i.ibb.co/qLyg9YhC/Gemini-Generated-Image-76vjgk76vjgk76vj-4.png",
     featured: true,
   },
   {
@@ -50,7 +50,7 @@ const projects = [
     tags: ["React", "Tailwind", "Framer Motion"],
     url: "#",
     img:
-      "https://images.unsplash.com/photo-1508921912186-1d1a45ebb3c1?auto=format&fit=crop&w=1600&q=60",
+      "https://contentsnare.com/wp-content/uploads/2021/12/Looking-to-create-a-website-1.jpg",
     featured: false,
   },
   {
@@ -61,7 +61,7 @@ const projects = [
     tags: ["Python", "Automation", "DevOps"],
     url: "#",
     img:
-      "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1600&q=60",
+      "https://cdn2.umnico.com/production/landing/en-article26-58ddec5a2835ce17e9c971c4ca9fe287.png",
     featured: true,
   },
   {
@@ -72,7 +72,7 @@ const projects = [
     tags: ["Next.js", "Vercel", "Frontend"],
     url: "https://space-for-et.vercel.app",
     img:
-      "https://images.unsplash.com/photo-1532298229144-0ec0c57515c7?auto=format&fit=crop&w=1600&q=60",
+      "https://www.freepik.com/free-psd/celestial-bodies-stunning-visualization-planets-sun_409868020.htm#fromView=keyword&page=2&position=11&uuid=a96dfe59-1b1e-4eb2-aa2d-db583908807f&query=Space",
     featured: false,
   },
 ];
@@ -426,7 +426,7 @@ export default function Portfolio() {
               >
                 <div className="rounded-3xl overflow-hidden shadow-2xl border border-gray-100 dark:border-gray-700">
                   <img
-                    src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=60"
+                    src="https://i.ibb.co/NgyM9t13/5913428015746583538-121.jpg" alt="5913428015746583538-121"
                     alt="Ermi Zamr"
                     className="object-cover w-full h-80"
                   />
